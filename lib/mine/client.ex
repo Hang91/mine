@@ -9,8 +9,10 @@ defmodule MINE.Client do
 
 		client_name = "002@#{ipstr}"
 		Node.start(String.to_atom(client_name))
-		Node.set_cookie(Node.self, :bitcoin)
-		Node.connect(String.to_atom(server_name))
+		node_alive?
+		Node.set_cookie(Node.self(), :bitcoin)
+		success = Node.connect(String.to_atom(server_name))
+		IO.puts success
 		for n <- 1..3 do
 			spawn fn -> mine_loop() end
 		end
@@ -23,6 +25,13 @@ defmodule MINE.Client do
 		{k, start, limit} = get_input()
 		MINE.Bitcoin.generate_coin(start, 0, 0, k, limit, pid)
 		mine_loop()
+	end
+
+	def node_alive? do
+		case Node.alive? do
+			true -> "alive"
+			false -> node_alive?()
+		end
 	end
 
 

@@ -8,7 +8,10 @@ defmodule MINE.Server do
 
 		server_name = "001@#{ipstr}"
 		Node.start(String.to_atom(server_name))
-		Node.set_cookie(Node.self, :bitcoin)
+		node_alive?()
+
+		Node.set_cookie(Node.self(), :bitcoin)
+
 		chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+`~-={}[],./<>?"
 		pid = spawn fn -> communicate(k, chars, 10000000000000, 0) end
 		:global.register_name(@servername, pid)
@@ -23,6 +26,13 @@ defmodule MINE.Server do
 		{k, start, limit} = get_input()
 		MINE.Bitcoin.generate_coin(start, 0, 0, k, limit, pid)
 		mine_loop(pid)
+	end
+
+	def node_alive? do
+		case Node.alive? do
+			true -> "alive"
+			false -> node_alive?()
+		end
 	end
 
 	def get_input() do
