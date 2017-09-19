@@ -4,13 +4,12 @@ defmodule MINE.Client do
 
 		{:ok, ipcomb1} = :inet.getif()
 		ipcomb2 = List.first(ipcomb1)
-		size = Kernel.tuple_size(ipcomb2)
 		ip = Kernel.elem(ipcomb2, 0)
 		ipstr = :inet_parse.ntoa(ip)
 
 		client_name = "002@#{ipstr}"
 		Node.start(String.to_atom(client_name))
-		Node.set_cookie(Node.self, @bitcoin)
+		Node.set_cookie(Node.self, :bitcoin)
 		Node.connect(String.to_atom(server_name))
 		for n <- 1..3 do
 			spawn fn -> mine_loop() end

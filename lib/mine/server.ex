@@ -3,13 +3,12 @@ defmodule MINE.Server do
 	def start_server(k) do
 		{:ok, ipcomb1} = :inet.getif()
 		ipcomb2 = List.first(ipcomb1)
-		size = Kernel.tuple_size(ipcomb2)
 		ip = Kernel.elem(ipcomb2, 0)
 		ipstr = :inet_parse.ntoa(ip)
 
 		server_name = "001@#{ipstr}"
 		Node.start(String.to_atom(server_name))
-		Node.set_cookie(Node.self, @bitcoin)
+		Node.set_cookie(Node.self, :bitcoin)
 		chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+`~-={}[],./<>?"
 		pid = spawn fn -> communicate(k, chars, 10000000000000, 0) end
 		:global.register_name(@servername, pid)
