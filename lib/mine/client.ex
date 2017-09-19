@@ -10,6 +10,7 @@ defmodule MINE.Client do
 
 		client_name = "002@#{ipstr}"
 		Node.start(String.to_atom(client_name))
+		Node.set_cookie(Node.self, @bitcoin)
 		Node.connect(String.to_atom(server_name))
 		for n <- 1..3 do
 			spawn fn -> mine_loop() end

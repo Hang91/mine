@@ -9,6 +9,7 @@ defmodule MINE.Server do
 
 		server_name = "001@#{ipstr}"
 		Node.start(String.to_atom(server_name))
+		Node.set_cookie(Node.self, @bitcoin)
 		chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+`~-={}[],./<>?"
 		pid = spawn fn -> communicate(k, chars, 10000000000000, 0) end
 		:global.register_name(@servername, pid)
