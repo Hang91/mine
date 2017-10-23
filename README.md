@@ -1,21 +1,12 @@
-# Mine
+# distributed bitcoin mining simulator
+used Elixir, actor model
 
-**TODO: Add description**
+try to find the result of SHA-256 with certain number of leading 0s.
 
-## Installation
+in mac OS, use command line
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `mine` to your list of dependencies in `mix.exs`:
+run:  mix escript/build
 
-```elixir
-def deps do
-  [
-    {:mine, "~> 0.1.0"}
-  ]
-end
-```
+then run: ./mine num
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/mine](https://hexdocs.pm/mine).
-
+note: num is the number of leading 0s
